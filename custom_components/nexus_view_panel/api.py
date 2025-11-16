@@ -34,25 +34,42 @@ class NexusViewPanelApiClient:
             async with self._session.request(
                 method, url, headers=self._headers, timeout=10, **kwargs
             ) as response:
-                response.raise_for_status()  # Raises HTTPError for 4xx/5xx status
                 
-                if response.status == 200 and response.content_type == "application/json":
-                    return await response.json()
-                return None # For successful POSTs with no JSON response
+                LOGGER.debug(f"Response status from {url}: {response.status}")
+                LOGGER.debug(f"Response content-type: {response.content_type}")
+                
+                # Hebe den Fehler für 4xx/5xx-Status hervor
+                response.raise_for_status() 
+                
+                if response.status == 200:
+                    if response.content_type == "application/json":
+                        json_data = await response.json()
+                        LOGGER.debug(f"Response JSON: {json_data}")
+                        return json_data
+                    else:
+                        # API hat 200 OK zurückgegeben, aber nicht als JSON. Das ist das Problem!
+                        text_data = await response.text()
+                        LOGGER.warning(
+                            f"API-Anfrage an {url} war erfolgreich (Status 200), aber der Content-Type ist '{response.content_type}', nicht 'application/json'. "
+                            f"Empfangener Text: {text_data}"
+                        )
+                        return None # Gib None zurück, aber wir wissen jetzt warum
+                
+                return None
 
         except ClientResponseError as err:
             if err.status == 401 or err.status == 403:
-                LOGGER.error("Authentication error: Check your API token.")
-                raise AuthError("Authentication failed") from err
+                LOGGER.error("Authentifizierungsfehler: API-Token prüfen.")
+                raise AuthError("Authentifizierung fehlgeschlagen") from err
             else:
-                LOGGER.error(f"API request failed: {err}")
-                raise ApiError(f"API request failed: {err}") from err
+                LOGGER.error(f"API-Anfrage fehlgeschlagen (ClientResponseError): {err}")
+                raise ApiError(f"API-Anfrage fehlgeschlagen: {err}") from err
         except asyncio.TimeoutError:
-            LOGGER.error(f"Timeout connecting to {url}")
-            raise ApiError("Request timed out") from None
+            LOGGER.error(f"Timeout beim Verbinden mit {url}")
+            raise ApiError("Anfrage-Timeout") from None
         except Exception as e:
-            LOGGER.error(f"An unexpected error occurred: {e}")
-            raise ApiError(f"Unexpected API error: {e}") from e
+            LOGGER.error(f"Unerwarteter Fehler bei der API-Anfrage: {e}")
+            raise ApiError(f"Unerwarteter API-Fehler: {e}") from e
 
     # --- GET Endpoints ---
 
@@ -62,7 +79,7 @@ class NexusViewPanelApiClient:
 
     async def async_get_config(self) -> dict[str, Any]:
         """Get the full app configuration."""
-        return await self._request("GET", "/api/config")
+        return await self._request("GET", "/config")
 
     # --- POST Endpoints (Commands) ---
     

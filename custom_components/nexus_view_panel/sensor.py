@@ -51,7 +51,11 @@ class NexusBatterySensor(CoordinatorEntity, SensorEntity):
     @property
     def native_value(self) -> int | None:
         """Return the state of the sensor."""
-        # We assume the /api/device endpoint returns {"battery": 100, ...}
-        if self.coordinator.data and "battery" in self.coordinator.data:
-            return self.coordinator.data["battery"]
+        #
+        # HIER IST DIE KORREKTUR
+        #
+        key_to_check = "batteryLevel" # Geändert von "battery"
+        
+        if self.coordinator.data and key_to_check in self.coordinator.data:
+            return self.coordinator.data[key_to_check]
         return None

@@ -3,10 +3,16 @@ from homeassistant.components.button import ButtonEntity
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant, callback
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
-from homeassistant.helpers.update_coordinator import CoordinatorEntity
+from homeassistant.helpers.update_coordinator import DataUpdateCoordinator
 
 from .api import NexusViewPanelApiClient
-from .const import DOMAIN, COORDINATOR_CONFIG, NEXUS_API_CLIENT, LOGGER
+from .const import (
+    DOMAIN, 
+    COORDINATOR_CONFIG, 
+    COORDINATOR_DEVICE, 
+    NEXUS_API_CLIENT, 
+    LOGGER
+)
 
 async def async_setup_entry(
     hass: HomeAssistant,
@@ -17,21 +23,26 @@ async def async_setup_entry(
     data = hass.data[DOMAIN][entry.entry_id]
     api_client = data[NEXUS_API_CLIENT]
     
-    # Get the CONFIG coordinator
+    # Hole beide Koordinatoren
     config_coordinator = data[COORDINATOR_CONFIG]
+    device_coordinator = data[COORDINATOR_DEVICE]
 
-    # Add the static "Close" button
-    static_buttons = [NexusCloseFloatButton(api_client, entry)]
+    # --- Statische Tasten ---
+    static_buttons = [
+        NexusCloseFloatButton(api_client, entry),
+        NexusGetDeviceInfoButton(device_coordinator, entry),
+        NexusGetConfigButton(config_coordinator, entry),
+    ]
     async_add_entities(static_buttons)
 
-    # --- Dynamic Button Handling ---
+    # --- Dynamische Tasten (Tabs) ---
     manager = NexusTabButtonManager(entry, api_client, config_coordinator, async_add_entities)
     
     entry.async_on_unload(
         config_coordinator.async_add_listener(manager.async_update_buttons)
     )
     
-    # Create buttons based on the initial data
+    # Erstelle Tasten basierend auf den ersten Daten
     manager.async_update_buttons()
 
 
@@ -42,7 +53,7 @@ class NexusTabButtonManager:
         self,
         entry: ConfigEntry,
         api_client: NexusViewPanelApiClient,
-        coordinator: CoordinatorEntity,
+        coordinator: DataUpdateCoordinator,
         async_add_entities: AddEntitiesCallback
     ):
         self.entry = entry
@@ -54,18 +65,14 @@ class NexusTabButtonManager:
     @callback
     def async_update_buttons(self) -> None:
         """Update buttons based on coordinator data."""
-        if not self.coordinator.last_successful_update or not self.coordinator.data:
+        if self.coordinator.data is None:
             return
 
-        # Data path is now nested inside the config object
         tabs_data = self.coordinator.data.get("tabs", [])
-        new_tab_indices = {tab["index"] for tab in tabs_data}
         
         new_buttons = []
-        for tab in tabs_data:
-            # We assume the 'index' field exists from the original Swagger doc
-            # If not, we can use the list index
-            tab_index = tab.get("index", tabs_data.index(tab)) 
+        for i, tab in enumerate(tabs_data):
+            tab_index = i # Wir verwenden den Listenindex
             tab_title = tab.get("title", f"Tab {tab_index}")
             
             if tab_index not in self._current_tab_indices:
@@ -78,20 +85,21 @@ class NexusTabButtonManager:
             self.async_add_entities(new_buttons)
 
 
-# --- Base Button Classes ---
+# --- Basis Tasten-Klassen ---
 
 class NexusBaseButton(ButtonEntity):
     """Base class for Nexus buttons."""
     _attr_has_entity_name = True
 
-    def __init__(self, api_client: NexusViewPanelApiClient, entry: ConfigEntry):
-        self._api_client = api_client
+    def __init__(self, entry: ConfigEntry):
+        """Initialize the base button."""
         self._attr_device_info = {
             "identifiers": {(DOMAIN, entry.entry_id)},
             "name": f"Nexus Panel ({entry.data['host']})",
             "manufacturer": "smintlife.de",
         }
 
+# --- API-basierte Tasten ---
 
 class NexusCloseFloatButton(NexusBaseButton):
     """Button to close the floating window."""
@@ -99,7 +107,8 @@ class NexusCloseFloatButton(NexusBaseButton):
     _attr_icon = "mdi:window-close"
 
     def __init__(self, api_client: NexusViewPanelApiClient, entry: ConfigEntry):
-        super().__init__(api_client, entry)
+        super().__init__(entry)
+        self._api_client = api_client
         self._attr_unique_id = f"{entry.entry_id}_close_float"
 
     async def async_press(self) -> None:
@@ -107,14 +116,13 @@ class NexusCloseFloatButton(NexusBaseButton):
         await self._api_client.async_close_floating()
 
 
-# --- Dynamic Button Classes (per-tab) ---
-
 class NexusReloadTabButton(NexusBaseButton):
     """Button to reload a specific tab."""
     _attr_icon = "mdi:reload"
 
     def __init__(self, api_client: NexusViewPanelApiClient, entry: ConfigEntry, tab_index: int, tab_title: str):
-        super().__init__(api_client, entry)
+        super().__init__(entry)
+        self._api_client = api_client
         self._tab_index = tab_index
         self._attr_name = f"Reload {tab_title}"
         self._attr_unique_id = f"{entry.entry_id}_reload_tab_{tab_index}"
@@ -129,7 +137,8 @@ class NexusFloatTabButton(NexusBaseButton):
     _attr_icon = "mdi:picture-in-picture-top-right"
 
     def __init__(self, api_client: NexusViewPanelApiClient, entry: ConfigEntry, tab_index: int, tab_title: str):
-        super().__init__(api_client, entry)
+        super().__init__(entry)
+        self._api_client = api_client
         self._tab_index = tab_index
         self._attr_name = f"Float {tab_title}"
         self._attr_unique_id = f"{entry.entry_id}_float_tab_{tab_index}"
@@ -137,3 +146,37 @@ class NexusFloatTabButton(NexusBaseButton):
     async def async_press(self) -> None:
         """Handle the button press."""
         await self._api_client.async_float_tab(self._tab_index)
+
+
+# --- NEUE KOORDINATOR-BASIERTE TASTEN ---
+
+class NexusGetDeviceInfoButton(NexusBaseButton):
+    """Button to force-refresh the device info coordinator."""
+    _attr_name = "Get Device Info"
+    _attr_icon = "mdi:update"
+
+    def __init__(self, coordinator: DataUpdateCoordinator, entry: ConfigEntry):
+        """Initialize the button."""
+        super().__init__(entry)
+        self.coordinator = coordinator
+        self._attr_unique_id = f"{entry.entry_id}_get_device_info"
+
+    async def async_press(self) -> None:
+        """Handle the button press."""
+        await self.coordinator.async_request_refresh()
+
+
+class NexusGetConfigButton(NexusBaseButton):
+    """Button to force-refresh the config coordinator."""
+    _attr_name = "Get Config"
+    _attr_icon = "mdi:update"
+
+    def __init__(self, coordinator: DataUpdateCoordinator, entry: ConfigEntry):
+        """Initialize the button."""
+        super().__init__(entry)
+        self.coordinator = coordinator
+        self._attr_unique_id = f"{entry.entry_id}_get_config"
+
+    async def async_press(self) -> None:
+        """Handle the button press."""
+        await self.coordinator.async_request_refresh()

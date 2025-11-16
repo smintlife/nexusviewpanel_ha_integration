@@ -41,17 +41,15 @@ async def async_setup_entry(
 
     # Add top-level sensors
     for key, name, icon, dev_class in CONFIG_SENSORS:
-        if coordinator.data and key in coordinator.data:
-            sensors_to_add.append(
-                NexusConfigBinarySensor(coordinator, entry, key, name, icon, dev_class)
-            )
+        sensors_to_add.append(
+            NexusConfigBinarySensor(coordinator, entry, key, name, icon, dev_class)
+        )
             
     # Add nested sensors
     for (key1, key2), name, icon, dev_class in NESTED_CONFIG_SENSORS:
-        if coordinator.data and key1 in coordinator.data and key2 in coordinator.data[key1]:
-             sensors_to_add.append(
-                NexusNestedConfigBinarySensor(coordinator, entry, key1, key2, name, icon, dev_class)
-            )
+         sensors_to_add.append(
+            NexusNestedConfigBinarySensor(coordinator, entry, key1, key2, name, icon, dev_class)
+        )
 
     async_add_entities(sensors_to_add)
 
@@ -60,7 +58,10 @@ class NexusConfigBinarySensor(CoordinatorEntity, BinarySensorEntity):
     """Represents a boolean setting from the /api/config endpoint."""
 
     _attr_has_entity_name = True
-    _attr_entity_registry_enabled_default = False  # Disabled by default
+    #
+    # HIER IST DIE KORREKTUR:
+    #
+    _attr_entity_registry_enabled_default = True  # Geändert von False
 
     def __init__(self, coordinator, entry, data_key, name, icon, device_class):
         """Initialize the binary sensor."""
@@ -88,7 +89,10 @@ class NexusNestedConfigBinarySensor(CoordinatorEntity, BinarySensorEntity):
     """Represents a nested boolean setting from the /api/config endpoint."""
 
     _attr_has_entity_name = True
-    _attr_entity_registry_enabled_default = False  # Disabled by default
+    #
+    # HIER IST DIE KORREKTUR:
+    #
+    _attr_entity_registry_enabled_default = True  # Geändert von False
 
     def __init__(self, coordinator, entry, key1, key2, name, icon, device_class):
         """Initialize the binary sensor."""

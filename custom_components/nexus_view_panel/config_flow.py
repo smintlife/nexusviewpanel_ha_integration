@@ -3,8 +3,9 @@ from typing import Any
 from urllib.parse import parse_qs, urlparse
 
 import voluptuous as vol
-from homeassistant.config_entries import ConfigFlow, AbortFlow
+from homeassistant.config_entries import ConfigFlow
 from homeassistant.const import CONF_API_TOKEN, CONF_HOST, CONF_PORT
+from homeassistant.data_entry_flow import AbortFlow
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 
 from .api import NexusViewPanelApiClient, ApiError, AuthError

@@ -4,8 +4,8 @@
       "user": {
         "title": "Select Connection Method",
         "menu_options": {
-          "qr": "Paste QR Code String",
-          "manual": "Enter Details Manually"
+          "qr": "Connect using QR Code String",
+          "manual": "Connect by entering details manually"
         }
       },
       "qr": {
