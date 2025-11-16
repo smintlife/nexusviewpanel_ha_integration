@@ -1,0 +1,21 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Connect to Nexus View Panel",
+        "description": "Scan the QR code in the NexusViewPanel app with your phone's camera, then paste the entire text string into the field below.",
+        "data": {
+          "qr_string": "Pasted QR Code String"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Failed to connect. Please check the host, port, and token. Is the device online?",
+      "invalid_auth": "Authentication failed. Please check your API Token.",
+      "invalid_qr": "Invalid string format. It should look like 'api_server=...&api_port=...&api_token=...'"
+    },
+    "abort": {
+      "already_configured": "This device is already configured."
+    }
+  }
+}

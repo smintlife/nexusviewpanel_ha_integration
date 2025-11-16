@@ -1,0 +1,91 @@
+"""API Client for Nexus View Panel."""
+import asyncio
+from typing import Any
+from aiohttp import ClientSession, ClientResponseError
+
+from .const import LOGGER
+
+# Define custom exceptions
+class ApiError(Exception):
+    """Exception to indicate a general API error."""
+
+class AuthError(ApiError):
+    """Exception to indicate an authentication error."""
+
+
+class NexusViewPanelApiClient:
+    """Class to manage API calls."""
+
+    def __init__(
+        self, host: str, port: int, token: str, session: ClientSession
+    ) -> None:
+        """Initialize the API client."""
+        self._base_url = f"http://{host}:{port}/api"
+        self._headers = {"Authorization": f"Bearer {token}"}
+        self._session = session
+
+    async def _request(self, method: str, path: str, **kwargs) -> dict[str, Any] | None:
+        """Make an API request."""
+        url = f"{self._base_url}{path}"
+        
+        LOGGER.debug(f"Sending {method} to {url} with data: {kwargs.get('json') or kwargs.get('params')}")
+
+        try:
+            async with self._session.request(
+                method, url, headers=self._headers, timeout=10, **kwargs
+            ) as response:
+                response.raise_for_status()  # Raises HTTPError for 4xx/5xx status
+                
+                if response.status == 200 and response.content_type == "application/json":
+                    return await response.json()
+                return None # For successful POSTs with no JSON response
+
+        except ClientResponseError as err:
+            if err.status == 401 or err.status == 403:
+                LOGGER.error("Authentication error: Check your API token.")
+                raise AuthError("Authentication failed") from err
+            else:
+                LOGGER.error(f"API request failed: {err}")
+                raise ApiError(f"API request failed: {err}") from err
+        except asyncio.TimeoutError:
+            LOGGER.error(f"Timeout connecting to {url}")
+            raise ApiError("Request timed out") from None
+        except Exception as e:
+            LOGGER.error(f"An unexpected error occurred: {e}")
+            raise ApiError(f"Unexpected API error: {e}") from e
+
+    # --- GET Endpoints ---
+
+    async def async_get_device(self) -> dict[str, Any]:
+        """Get device status (battery, brightness, etc.)."""
+        return await self._request("GET", "/device")
+
+    async def async_get_config(self) -> dict[str, Any]:
+        """Get the full app configuration."""
+        return await self._request("GET", "/api/config")
+
+    # --- POST Endpoints (Commands) ---
+    
+    async def async_display_on(self) -> None:
+        """Turn the display on."""
+        await self._request("POST", "/display/on")
+
+    async def async_display_off(self) -> None:
+        """Turn the display off."""
+        await self._request("POST", "/display/off")
+
+    async def async_set_brightness(self, brightness: int) -> None:
+        """Set display brightness (0-100)."""
+        await self._request("POST", "/display/brightness", params={"value": brightness})
+
+    async def async_close_floating(self) -> None:
+        """Close the floating window."""
+        await self._request("POST", "/floating/close")
+
+    async def async_float_tab(self, tab_index: int) -> None:
+        """Float a specific tab."""
+        await self._request("POST", f"/tabs/{tab_index}/float")
+
+    async def async_reload_tab(self, tab_index: int) -> None:
+        """Reload a specific tab."""
+        await self._request("POST", f"/tabs/{tab_index}/reload")
