@@ -1,0 +1,47 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Verbindungsmethode auswählen",
+        "menu_options": {
+          "qr": "Mit QR-Code-String verbinden",
+          "manual": "Details manuell eingeben"
+        }
+      },
+      "qr": {
+        "title": "Mit QR-Code verbinden",
+        "description": "Scannen Sie den QR-Code in der NexusViewPanel-App mit Ihrer Handykamera und fügen Sie den gesamten Text-String (er beginnt mit 'http://...') in das Feld unten ein.",
+        "data": {
+          "qr_string": "Eingefügter QR-Code-String"
+        }
+      },
+      "manual": {
+        "title": "Manuell verbinden",
+        "description": "Geben Sie die Verbindungsdetails für Ihr Nexus View Panel-Gerät ein.",
+        "data": {
+          "host": "IP-Adresse oder Hostname",
+          "port": "API-Port",
+          "api_token": "API-Token"
+        }
+      },
+      "name": {
+        "title": "Gerät benennen",
+        "description": "Legen Sie einen Anzeigenamen und die Abrufintervalle für dieses Gerät fest.",
+        "data": {
+          "name": "Name",
+          "device_interval": "Geräte-Abrufintervall (Sekunden)",
+          "config_interval": "Konfigurations-Abrufintervall (Sekunden)"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Verbindung fehlgeschlagen. Bitte prüfen Sie Host, Port und Token. Ist das Gerät online?",
+      "invalid_auth": "Authentifizierung fehlgeschlagen. Bitte prüfen Sie Ihren API-Token.",
+      "invalid_qr": "Ungültiges String-Format. Es sollte so aussehen: 'http://<ip>:<port>/swagger?api_token=<token>'",
+      "unknown": "Ein unerwarteter Fehler ist aufgetreten."
+    },
+    "abort": {
+      "already_configured": "Dieses Gerät ist bereits konfiguriert."
+    }
+  }
+}

@@ -1,0 +1,47 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Select Connection Method",
+        "menu_options": {
+          "qr": "Connect using QR Code String",
+          "manual": "Connect by entering details manually"
+        }
+      },
+      "qr": {
+        "title": "Connect with QR Code",
+        "description": "Scan the QR code in the NexusViewPanel app with your phone's camera, then paste the entire text string (it starts with 'http://...') into the field below.",
+        "data": {
+          "qr_string": "Pasted QR Code String"
+        }
+      },
+      "manual": {
+        "title": "Connect Manually",
+        "description": "Enter the connection details for your Nexus View Panel device.",
+        "data": {
+          "host": "IP Address or Hostname",
+          "port": "API Port",
+          "api_token": "API Token"
+        }
+      },
+      "name": {
+        "title": "Name Your Device",
+        "description": "Set a friendly name and the polling intervals for this device.",
+        "data": {
+          "name": "Name",
+          "device_interval": "Device Poll Interval (seconds)",
+          "config_interval": "Config Poll Interval (seconds)"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Failed to connect. Please check the host, port, and token. Is the device online?",
+      "invalid_auth": "Authentication failed. Please check your API Token.",
+      "invalid_qr": "Invalid string format. It should look like 'http://<ip>:<port>/swagger?api_token=<token>'",
+      "unknown": "An unexpected error occurred."
+    },
+    "abort": {
+      "already_configured": "This device is already configured."
+    }
+  }
+}
