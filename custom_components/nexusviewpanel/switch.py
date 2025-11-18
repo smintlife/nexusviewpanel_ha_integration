@@ -1,4 +1,4 @@
-"""Switch platform for Nexus View Panel."""
+"""Switch platform for NexusViewPanel."""
 from homeassistant.components.switch import SwitchEntity
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant

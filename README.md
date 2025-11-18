@@ -40,10 +40,7 @@ This integration is available as a "Custom Repository" in HACS.
 1.  In your Home Assistant instance, go to **HACS**.
 2.  Click on **"Integrations"** and then click the three-dot menu in the top right.
 3.  Select **"Custom repositories"**.
-4.  In the "Repository" field, paste the following URL:
-    ```
-    [https://github.com/smintlife/nexusviewpanel_ha_integration](https://github.com/smintlife/nexusviewpanel_ha_integration)
-    ```
+4.  In the "Repository" field, paste the following URL: [https://github.com/smintlife/nexusviewpanel_ha_integration](https://github.com/smintlife/nexusviewpanel_ha_integration)
 5.  In the "Category" field, select **"Integration"**.
 6.  Click **"Add"**.
 7.  Close the window. The "Nexus View Panel" integration will now appear in HACS.

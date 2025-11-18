@@ -1,7 +1,7 @@
-"""Constants for the Nexus View Panel integration."""
+"""Constants for the NexusViewPanel integration."""
 from logging import getLogger
 
-DOMAIN = "nexus_view_panel"
+DOMAIN = "nexusviewpanel"
 LOGGER = getLogger(__package__)
 
 DEVICE_UPDATE_INTERVAL = 60

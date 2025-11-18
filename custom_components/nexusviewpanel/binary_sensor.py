@@ -1,4 +1,4 @@
-"""Binary sensor platform for Nexus View Panel."""
+"""Binary sensor platform for NexusViewPanel."""
 from homeassistant.components.binary_sensor import (
     BinarySensorDeviceClass,
     BinarySensorEntity,

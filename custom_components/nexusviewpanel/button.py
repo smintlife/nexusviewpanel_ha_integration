@@ -1,4 +1,4 @@
-"""Button platform for Nexus View Panel."""
+"""Button platform for NexusViewPanel."""
 from homeassistant.components.button import ButtonEntity
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant, callback

@@ -1,4 +1,4 @@
-"""API Client for Nexus View Panel."""
+"""API Client for NexusViewPanel."""
 import asyncio
 from typing import Any
 from aiohttp import ClientSession, ClientResponseError

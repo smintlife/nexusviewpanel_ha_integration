@@ -1,4 +1,4 @@
-"""Config flow for Nexus View Panel integration."""
+"""Config flow for NexusViewPanel integration."""
 import json
 import os
 from typing import Any
@@ -30,7 +30,7 @@ QR_DATA_SCHEMA = vol.Schema({vol.Required("qr_string"): str})
 
 
 class NexusConfigFlow(ConfigFlow, domain=DOMAIN):
-    """Handle a config flow for Nexus View Panel."""
+    """Handle a config flow for NexusViewPanel."""
 
     VERSION = 1
     
