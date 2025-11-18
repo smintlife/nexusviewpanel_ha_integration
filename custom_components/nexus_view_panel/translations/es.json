@@ -1,0 +1,47 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Seleccionar método de conexión",
+        "menu_options": {
+          "qr": "Conectar usando cadena de QR",
+          "manual": "Introducir detalles manualmente"
+        }
+      },
+      "qr": {
+        "title": "Conectar con QR",
+        "description": "Escanee el código QR en la aplicación NexusViewPanel con la cámara de su teléfono, luego pegue la cadena de texto completa (comienza con 'http://...') en el campo de abajo.",
+        "data": {
+          "qr_string": "Cadena de QR pegada"
+        }
+      },
+      "manual": {
+        "title": "Conectar manualmente",
+        "description": "Introduzca los detalles de conexión para su dispositivo Nexus View Panel.",
+        "data": {
+          "host": "Dirección IP o nombre de host",
+          "port": "Puerto API",
+          "api_token": "Token API"
+        }
+      },
+      "name": {
+        "title": "Nombrar su dispositivo",
+        "description": "Establezca un nombre amigable y los intervalos de sondeo para este dispositivo.",
+        "data": {
+          "name": "Nombre",
+          "device_interval": "Intervalo de sondeo del dispositivo (segundos)",
+          "config_interval": "Intervalo de sondeo de configuración (segundos)"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "No se pudo conectar. Por favor, verifique el host, el puerto y el token. ¿Está el dispositivo en línea?",
+      "invalid_auth": "Autenticación fallida. Por favor, verifique su Token API.",
+      "invalid_qr": "Formato de cadena no válido. Debería ser 'http://<ip>:<port>/swagger?api_token=<token>'",
+      "unknown": "Ha ocurrido un error inesperado."
+    },
+    "abort": {
+      "already_configured": "Este dispositivo ya está configurado."
+    }
+  }
+}

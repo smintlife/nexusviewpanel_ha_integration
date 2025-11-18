@@ -1,4 +1,6 @@
 """Config flow for Nexus View Panel integration."""
+import json
+import os
 from typing import Any
 from urllib.parse import parse_qs, urlparse
 
@@ -9,9 +11,13 @@ from homeassistant.data_entry_flow import AbortFlow
 from homeassistant.helpers.aiohttp_client import async_get_clientsession
 
 from .api import NexusViewPanelApiClient, ApiError, AuthError
-from .const import DOMAIN, LOGGER
+from .const import (
+    DOMAIN, 
+    LOGGER, 
+    DEVICE_UPDATE_INTERVAL,
+    CONFIG_UPDATE_INTERVAL
+)
 
-# Schema for the manual input form
 MANUAL_DATA_SCHEMA = vol.Schema(
     {
         vol.Required(CONF_HOST): str,
@@ -20,7 +26,6 @@ MANUAL_DATA_SCHEMA = vol.Schema(
     }
 )
 
-# Schema for the QR string input form
 QR_DATA_SCHEMA = vol.Schema({vol.Required("qr_string"): str})
 
 
@@ -29,7 +34,6 @@ class NexusConfigFlow(ConfigFlow, domain=DOMAIN):
 
     VERSION = 1
     
-    # Class variable to hold data between steps
     config_data: dict[str, Any] = {}
 
     async def _async_validate_connection(
@@ -43,7 +47,6 @@ class NexusConfigFlow(ConfigFlow, domain=DOMAIN):
         api_client = NexusViewPanelApiClient(
             host=host, port=port, token=token, session=session
         )
-        # Test the connection by fetching device info
         await api_client.async_get_device()
 
     async def async_step_user(
@@ -61,7 +64,6 @@ class NexusConfigFlow(ConfigFlow, domain=DOMAIN):
         if user_input is not None:
             qr_string = user_input["qr_string"]
             try:
-                # Parse the URL: "http://<ip>:<port>/swagger?api_token=<token>"
                 parsed_url = urlparse(qr_string)
                 query_params = parse_qs(parsed_url.query)
 
@@ -76,21 +78,17 @@ class NexusConfigFlow(ConfigFlow, domain=DOMAIN):
                 port = parsed_url.port
                 token = query_params["api_token"][0]
 
-                # Validate connection
                 await self._async_validate_connection(host, port, token)
 
-                # Set unique ID and check if already configured
                 await self.async_set_unique_id(f"nexus_{host}")
                 self._abort_if_unique_id_configured()
 
-                # Store data for the next step
                 self.config_data = {
                     CONF_HOST: host,
                     CONF_PORT: port,
                     CONF_API_TOKEN: token,
                 }
                 
-                # Proceed to the naming step
                 return await self.async_step_name()
 
             except (ValueError, KeyError, IndexError, AttributeError):
@@ -105,7 +103,6 @@ class NexusConfigFlow(ConfigFlow, domain=DOMAIN):
                 LOGGER.error(f"Unexpected error during QR setup: {e}", exc_info=True)
                 errors["base"] = "unknown"
 
-        # Show the QR input form
         return self.async_show_form(
             step_id="qr", data_schema=QR_DATA_SCHEMA, errors=errors
         )
@@ -122,21 +119,17 @@ class NexusConfigFlow(ConfigFlow, domain=DOMAIN):
             token = user_input[CONF_API_TOKEN]
 
             try:
-                # Validate connection
                 await self._async_validate_connection(host, port, token)
 
-                # Set unique ID and check if already configured
                 await self.async_set_unique_id(f"nexus_{host}")
                 self._abort_if_unique_id_configured()
 
-                # Store data for the next step
                 self.config_data = {
                     CONF_HOST: host,
                     CONF_PORT: port,
                     CONF_API_TOKEN: token,
                 }
 
-                # Proceed to the naming step
                 return await self.async_step_name()
 
             except AuthError:
@@ -149,7 +142,6 @@ class NexusConfigFlow(ConfigFlow, domain=DOMAIN):
                 LOGGER.error(f"Unexpected error during manual setup: {e}", exc_info=True)
                 errors["base"] = "unknown"
 
-        # Show the manual input form
         return self.async_show_form(
             step_id="manual", data_schema=MANUAL_DATA_SCHEMA, errors=errors
         )
@@ -157,24 +149,31 @@ class NexusConfigFlow(ConfigFlow, domain=DOMAIN):
     async def async_step_name(
         self, user_input: dict[str, Any] | None = None
     ) -> dict[str, Any]:
-        """Handle the device naming step."""
+        """Handle the device naming and interval step."""
         
-        # This step should only be reached after config_data is set
         if not self.config_data:
-            # This should not happen, but as a safeguard:
             return self.async_abort(reason="unknown")
 
         if user_input is not None:
-            # User has submitted a name, create the entry
             title = user_input["name"]
+            
+            self.config_data["device_interval"] = user_input["device_interval"]
+            self.config_data["config_interval"] = user_input["config_interval"]
+            
             return self.async_create_entry(title=title, data=self.config_data)
-
-        # Show the naming form
-        # Suggest a default name, e.g., "Nexus Panel (192.168.1.50)"
+        
         default_name = f"Nexus Panel ({self.config_data[CONF_HOST]})"
         
         name_schema = vol.Schema(
-            {vol.Required("name", default=default_name): str}
+            {
+                vol.Required("name", default=default_name): str,
+                vol.Required(
+                    "device_interval", default=DEVICE_UPDATE_INTERVAL
+                ): vol.All(vol.Coerce(int), vol.Range(min=5)),
+                vol.Required(
+                    "config_interval", default=CONFIG_UPDATE_INTERVAL
+                ): vol.All(vol.Coerce(int), vol.Range(min=60)),
+            }
         )
 
         return self.async_show_form(

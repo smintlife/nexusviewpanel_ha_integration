@@ -33,7 +33,7 @@ class NexusBrightnessNumber(CoordinatorEntity, NumberEntity):
     _attr_native_min_value = 0
     _attr_native_max_value = 100
     _attr_native_step = 1
-    _attr_mode = NumberMode.SLIDER  # Show as a slider
+    _attr_mode = NumberMode.SLIDER
 
     def __init__(self, coordinator, api_client, entry: ConfigEntry):
         """Initialize the number entity."""
@@ -56,6 +56,4 @@ class NexusBrightnessNumber(CoordinatorEntity, NumberEntity):
     async def async_set_native_value(self, value: float) -> None:
         """Update the brightness setting."""
         await self._api_client.async_set_brightness(int(value))
-        
-        # After setting, tell the coordinator to refresh its data
         await self.coordinator.async_request_refresh()

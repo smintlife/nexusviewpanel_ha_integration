@@ -38,7 +38,6 @@ class NexusViewPanelApiClient:
                 LOGGER.debug(f"Response status from {url}: {response.status}")
                 LOGGER.debug(f"Response content-type: {response.content_type}")
                 
-                # Hebe den Fehler für 4xx/5xx-Status hervor
                 response.raise_for_status() 
                 
                 if response.status == 200:
@@ -47,13 +46,12 @@ class NexusViewPanelApiClient:
                         LOGGER.debug(f"Response JSON: {json_data}")
                         return json_data
                     else:
-                        # API hat 200 OK zurückgegeben, aber nicht als JSON. Das ist das Problem!
                         text_data = await response.text()
                         LOGGER.warning(
                             f"API-Anfrage an {url} war erfolgreich (Status 200), aber der Content-Type ist '{response.content_type}', nicht 'application/json'. "
                             f"Empfangener Text: {text_data}"
                         )
-                        return None # Gib None zurück, aber wir wissen jetzt warum
+                        return None
                 
                 return None
 
@@ -71,8 +69,6 @@ class NexusViewPanelApiClient:
             LOGGER.error(f"Unerwarteter Fehler bei der API-Anfrage: {e}")
             raise ApiError(f"Unerwarteter API-Fehler: {e}") from e
 
-    # --- GET Endpoints ---
-
     async def async_get_device(self) -> dict[str, Any]:
         """Get device status (battery, brightness, etc.)."""
         return await self._request("GET", "/device")
@@ -80,8 +76,6 @@ class NexusViewPanelApiClient:
     async def async_get_config(self) -> dict[str, Any]:
         """Get the full app configuration."""
         return await self._request("GET", "/config")
-
-    # --- POST Endpoints (Commands) ---
     
     async def async_display_on(self) -> None:
         """Turn the display on."""

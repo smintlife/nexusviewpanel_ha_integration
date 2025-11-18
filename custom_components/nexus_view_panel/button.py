@@ -23,11 +23,9 @@ async def async_setup_entry(
     data = hass.data[DOMAIN][entry.entry_id]
     api_client = data[NEXUS_API_CLIENT]
     
-    # Hole beide Koordinatoren
     config_coordinator = data[COORDINATOR_CONFIG]
     device_coordinator = data[COORDINATOR_DEVICE]
 
-    # --- Statische Tasten ---
     static_buttons = [
         NexusCloseFloatButton(api_client, entry),
         NexusGetDeviceInfoButton(device_coordinator, entry),
@@ -35,14 +33,12 @@ async def async_setup_entry(
     ]
     async_add_entities(static_buttons)
 
-    # --- Dynamische Tasten (Tabs) ---
     manager = NexusTabButtonManager(entry, api_client, config_coordinator, async_add_entities)
     
     entry.async_on_unload(
         config_coordinator.async_add_listener(manager.async_update_buttons)
     )
     
-    # Erstelle Tasten basierend auf den ersten Daten
     manager.async_update_buttons()
 
 
@@ -72,7 +68,7 @@ class NexusTabButtonManager:
         
         new_buttons = []
         for i, tab in enumerate(tabs_data):
-            tab_index = i # Wir verwenden den Listenindex
+            tab_index = i
             tab_title = tab.get("title", f"Tab {tab_index}")
             
             if tab_index not in self._current_tab_indices:
@@ -84,8 +80,6 @@ class NexusTabButtonManager:
         if new_buttons:
             self.async_add_entities(new_buttons)
 
-
-# --- Basis Tasten-Klassen ---
 
 class NexusBaseButton(ButtonEntity):
     """Base class for Nexus buttons."""
@@ -99,7 +93,6 @@ class NexusBaseButton(ButtonEntity):
             "manufacturer": "smintlife.de",
         }
 
-# --- API-basierte Tasten ---
 
 class NexusCloseFloatButton(NexusBaseButton):
     """Button to close the floating window."""
@@ -147,8 +140,6 @@ class NexusFloatTabButton(NexusBaseButton):
         """Handle the button press."""
         await self._api_client.async_float_tab(self._tab_index)
 
-
-# --- NEUE KOORDINATOR-BASIERTE TASTEN ---
 
 class NexusGetDeviceInfoButton(NexusBaseButton):
     """Button to force-refresh the device info coordinator."""

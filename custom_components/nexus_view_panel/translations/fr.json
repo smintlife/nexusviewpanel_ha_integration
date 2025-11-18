@@ -1,0 +1,47 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Sélectionner la méthode de connexion",
+        "menu_options": {
+          "qr": "Se connecter via la chaîne QR",
+          "manual": "Saisir les détails manuellement"
+        }
+      },
+      "qr": {
+        "title": "Connexion par QR Code",
+        "description": "Scannez le code QR dans l'application NexusViewPanel avec l'appareil photo de votre téléphone, puis collez la chaîne de texte complète (elle commence par 'http://...') dans le champ ci-dessous.",
+        "data": {
+          "qr_string": "Chaîne QR collée"
+        }
+      },
+      "manual": {
+        "title": "Connexion manuelle",
+        "description": "Saisissez les détails de connexion de votre appareil Nexus View Panel.",
+        "data": {
+          "host": "Adresse IP ou nom d'hôte",
+          "port": "Port API",
+          "api_token": "Jeton API"
+        }
+      },
+      "name": {
+        "title": "Nommer votre appareil",
+        "description": "Définissez un nom convivial et les intervalles d'interrogation pour cet appareil.",
+        "data": {
+          "name": "Nom",
+          "device_interval": "Intervalle d'interrogation de l'appareil (secondes)",
+          "config_interval": "Intervalle d'interrogation de la configuration (secondes)"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Échec de la connexion. Veuillez vérifier l'hôte, le port et le jeton. L'appareil est-il en ligne ?",
+      "invalid_auth": "Échec de l'authentification. Veuillez vérifier votre jeton API.",
+      "invalid_qr": "Format de chaîne non valide. Il devrait ressembler à 'http://<ip>:<port>/swagger?api_token=<token>'",
+      "unknown": "Une erreur inattendue est survenue."
+    },
+    "abort": {
+      "already_configured": "Cet appareil est déjà configuré."
+    }
+  }
+}

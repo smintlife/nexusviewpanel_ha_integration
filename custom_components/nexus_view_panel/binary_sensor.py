@@ -10,8 +10,6 @@ from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
 from .const import DOMAIN, COORDINATOR_CONFIG
 
-# Define all the binary sensors we want to create from the config
-# (data_key, Name, icon, device_class)
 CONFIG_SENSORS = [
     ("kioskMode", "Kiosk Mode", "mdi:lock", None),
     ("fullscreen", "Fullscreen", "mdi:fullscreen", None),
@@ -22,7 +20,7 @@ CONFIG_SENSORS = [
     ("deviceAdminLock", "Device Admin Lock", "mdi:shield-lock", BinarySensorDeviceClass.LOCK),
     ("tabsSwipable", "Tabs Swipable", "mdi:arrow-left-right", None),
 ]
-# Nested sensors
+
 NESTED_CONFIG_SENSORS = [
     (("floatingView", "enabled"), "Floating View Enabled", "mdi:picture-in-picture-top-right", None),
     (("pinProtection", "enabled"), "PIN Protection", "mdi:lock-pattern", BinarySensorDeviceClass.LOCK),
@@ -39,13 +37,11 @@ async def async_setup_entry(
 
     sensors_to_add = []
 
-    # Add top-level sensors
     for key, name, icon, dev_class in CONFIG_SENSORS:
         sensors_to_add.append(
             NexusConfigBinarySensor(coordinator, entry, key, name, icon, dev_class)
         )
             
-    # Add nested sensors
     for (key1, key2), name, icon, dev_class in NESTED_CONFIG_SENSORS:
          sensors_to_add.append(
             NexusNestedConfigBinarySensor(coordinator, entry, key1, key2, name, icon, dev_class)
@@ -58,10 +54,7 @@ class NexusConfigBinarySensor(CoordinatorEntity, BinarySensorEntity):
     """Represents a boolean setting from the /api/config endpoint."""
 
     _attr_has_entity_name = True
-    #
-    # HIER IST DIE KORREKTUR:
-    #
-    _attr_entity_registry_enabled_default = True  # Geändert von False
+    _attr_entity_registry_enabled_default = True
 
     def __init__(self, coordinator, entry, data_key, name, icon, device_class):
         """Initialize the binary sensor."""
@@ -89,10 +82,7 @@ class NexusNestedConfigBinarySensor(CoordinatorEntity, BinarySensorEntity):
     """Represents a nested boolean setting from the /api/config endpoint."""
 
     _attr_has_entity_name = True
-    #
-    # HIER IST DIE KORREKTUR:
-    #
-    _attr_entity_registry_enabled_default = True  # Geändert von False
+    _attr_entity_registry_enabled_default = True
 
     def __init__(self, coordinator, entry, key1, key2, name, icon, device_class):
         """Initialize the binary sensor."""

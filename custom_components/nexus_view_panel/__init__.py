@@ -18,7 +18,6 @@ from .const import (
     CONFIG_UPDATE_INTERVAL,
 )
 
-# Define the platforms we want to support
 PLATFORMS: list[Platform] = [
     Platform.SWITCH,
     Platform.NUMBER,
@@ -37,8 +36,10 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         token=entry.data[CONF_API_TOKEN],
         session=async_get_clientsession(hass),
     )
+    
+    device_interval = entry.data.get("device_interval", DEVICE_UPDATE_INTERVAL)
+    config_interval = entry.data.get("config_interval", CONFIG_UPDATE_INTERVAL)
 
-    # --- Coordinator for Device Status (polled frequently) ---
     async def async_update_device_data():
         """Fetch data from /api/device."""
         try:
@@ -51,10 +52,9 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         LOGGER,
         name=f"{DOMAIN}_device_status",
         update_method=async_update_device_data,
-        update_interval=timedelta(seconds=DEVICE_UPDATE_INTERVAL),
+        update_interval=timedelta(seconds=device_interval),
     )
 
-    # --- Coordinator for Config (polled infrequently) ---
     async def async_update_config_data():
         """Fetch data from /api/config."""
         try:
@@ -67,21 +67,18 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         LOGGER,
         name=f"{DOMAIN}_config",
         update_method=async_update_config_data,
-        update_interval=timedelta(seconds=CONFIG_UPDATE_INTERVAL),
+        update_interval=timedelta(seconds=config_interval),
     )
     
-    # Fetch initial data for both coordinators
     await device_coordinator.async_config_entry_first_refresh()
     await config_coordinator.async_config_entry_first_refresh()
 
-    # Store the API client and coordinators in hass.data
     hass.data.setdefault(DOMAIN, {})[entry.entry_id] = {
         NEXUS_API_CLIENT: api_client,
         COORDINATOR_DEVICE: device_coordinator,
         COORDINATOR_CONFIG: config_coordinator,
     }
 
-    # Forward the setup to our entity platforms
     await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
 
     return True

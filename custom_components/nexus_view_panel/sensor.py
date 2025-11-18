@@ -21,7 +21,6 @@ async def async_setup_entry(
     data = hass.data[DOMAIN][entry.entry_id]
     coordinator = data[COORDINATOR_DEVICE]
 
-    # Create sensors based on the device coordinator
     sensors = [
         NexusBatterySensor(coordinator, entry),
     ]
@@ -51,10 +50,7 @@ class NexusBatterySensor(CoordinatorEntity, SensorEntity):
     @property
     def native_value(self) -> int | None:
         """Return the state of the sensor."""
-        #
-        # HIER IST DIE KORREKTUR
-        #
-        key_to_check = "batteryLevel" # Geändert von "battery"
+        key_to_check = "batteryLevel"
         
         if self.coordinator.data and key_to_check in self.coordinator.data:
             return self.coordinator.data[key_to_check]

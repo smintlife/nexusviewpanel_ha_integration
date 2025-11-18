@@ -27,9 +27,6 @@ class NexusDisplaySwitch(SwitchEntity):
     _attr_has_entity_name = True
     _attr_name = "Display"
     _attr_icon = "mdi:tablet-dashboard"
-    
-    # This is an "optimistic" switch. We don't poll its state.
-    # We assume it's in the state we last set it to.
     _attr_assumed_state = True
 
     def __init__(self, api_client: NexusViewPanelApiClient, entry: ConfigEntry):
