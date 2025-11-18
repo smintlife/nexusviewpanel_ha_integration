@@ -37,7 +37,7 @@
     "error": {
       "cannot_connect": "Échec de la connexion. Veuillez vérifier l'hôte, le port et le jeton. L'appareil est-il en ligne ?",
       "invalid_auth": "Échec de l'authentification. Veuillez vérifier votre jeton API.",
-      "invalid_qr": "Format de chaîne non valide. Il devrait ressembler à 'http://<ip>:<port>/swagger?api_token=<token>'",
+      "invalid_qr": "Format de chaîne non valide. Il devrait ressembler à 'http://&lt;device-ip&gt;:&lt;port&gt;/swagger?api_token=&lt;your-token&gt;'",
       "unknown": "Une erreur inattendue est survenue."
     },
     "abort": {

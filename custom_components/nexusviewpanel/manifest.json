@@ -3,11 +3,11 @@
   "name": "NexusViewPanel",
   "codeowners": ["@smintlife"],
   "config_flow": true,
+  "dependencies": ["http"],
   "documentation": "https://github.com/smintlife/nexusviewpanel_ha_integration",
   "iot_class": "local_polling",
   "issue_tracker": "https://github.com/smintlife/nexusviewpanel_ha_integration/issues",
+  "loggers": ["custom_components.nexusviewpanel"],
   "requirements": [],
-  "version": "1.0.0",
-  "dependencies": ["http"],
-  "loggers": ["custom_components.nexusviewpanel"]
+  "version": "1.0.0"
 }
