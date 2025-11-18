@@ -1,10 +1,10 @@
-# Nexus View Panel Integration
+# NexusViewPanel Integration
 
 [![hacs_badge](https://img.shields.io/badge/HACS-Custom-orange.svg)](https://github.com/hacs/integration)
 [![GitHub release](https://img.shields.io/github/v/release/smintlife/nexusviewpanel_ha_integration)](https://github.com/smintlife/nexusviewpanel_ha_integration/releases)
 [![GitHub issues](https://img.shields.io/github/issues/smintlife/nexusviewpanel_ha_integration)](https://github.com/smintlife/nexusviewpanel_ha_integration/issues)
 
-This integration connects your [Nexus View Panel](https://www.smintlife.de/nexus) application to Home Assistant, allowing you to control and automate your panel.
+This integration connects your [NexusViewPanel](https://www.smintlife.de/nexus) application to Home Assistant, allowing you to control and automate your panel.
 
 
 
@@ -12,7 +12,7 @@ This integration connects your [Nexus View Panel](https://www.smintlife.de/nexus
 
 ## 🚀 Features
 
-This integration creates the following entities for your Nexus View Panel device:
+This integration creates the following entities for your NexusViewPanel device:
 
 * **Switch:** A `switch.display` to turn the screen on and off.
 * **Number:** A `number.configured_brightness` slider to set the app's configured brightness (0-100).
@@ -28,7 +28,7 @@ This integration creates the following entities for your Nexus View Panel device
 
 1.  A running Home Assistant instance.
 2.  [HACS (Home Assistant Community Store)](https://hacs.xyz/) must be installed.
-3.  The **Nexus View Panel** app running on a device.
+3.  The **NexusViewPanel** app running on a device.
 4.  The **API function** must be enabled within the app (this generates your API token and port).
 
 ---
@@ -43,7 +43,7 @@ This integration is available as a "Custom Repository" in HACS.
 4.  In the "Repository" field, paste the following URL: [https://github.com/smintlife/nexusviewpanel_ha_integration](https://github.com/smintlife/nexusviewpanel_ha_integration)
 5.  In the "Category" field, select **"Integration"**.
 6.  Click **"Add"**.
-7.  Close the window. The "Nexus View Panel" integration will now appear in HACS.
+7.  Close the window. The "NexusViewPanel" integration will now appear in HACS.
 8.  Click **"Install"** and follow the prompts.
 9.  **Restart Home Assistant** when prompted by HACS.
 
@@ -61,13 +61,13 @@ After installation, the integration is configured via the UI:
 
 1.  Go to **Settings > Devices & Services**.
 2.  Click **"Add Integration"** in the bottom right.
-3.  Search for **"Nexus View Panel"** and select it.
+3.  Search for **"NexusViewPanel"** and select it.
 4.  You will have two options to add your device:
 
 ### Option A: Via QR Code (Recommended)
 
 1.  Select **"Connect using QR Code String"**.
-2.  Open your Nexus View Panel app, go to API settings, and tap "Show QR Code".
+2.  Open your NexusViewPanel app, go to API settings, and tap "Show QR Code".
 3.  Scan this QR code with your **smartphone's native camera app** (not the Home Assistant app).
 4.  Copy the text your camera provides (it starts with `http://...`).
 5.  Paste this entire string into the field in Home Assistant.
@@ -75,7 +75,7 @@ After installation, the integration is configured via the UI:
 ### Option B: Manual Entry
 
 1.  Select **"Connect by entering details manually"**.
-2.  Enter the **IP Address**, **Port**, and **API Token** shown in your Nexus View Panel app's API settings.
+2.  Enter the **IP Address**, **Port**, and **API Token** shown in your NexusViewPanel app's API settings.
 
 ### Final Step
 
