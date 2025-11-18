@@ -17,7 +17,7 @@
       },
       "manual": {
         "title": "Conectar manualmente",
-        "description": "Introduzca los detalles de conexión para su dispositivo Nexus View Panel.",
+        "description": "Introduzca los detalles de conexión para su dispositivo NexusViewPanel.",
         "data": {
           "host": "Dirección IP o nombre de host",
           "port": "Puerto API",

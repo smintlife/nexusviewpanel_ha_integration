@@ -1,4 +1,4 @@
-"""The Nexus View Panel integration."""
+"""The NexusViewPanel integration."""
 from datetime import timedelta
 
 from homeassistant.config_entries import ConfigEntry
@@ -28,7 +28,7 @@ PLATFORMS: list[Platform] = [
 
 
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
-    """Set up Nexus View Panel from a config entry."""
+    """Set up NexusViewPanel from a config entry."""
 
     api_client = NexusViewPanelApiClient(
         host=entry.data[CONF_HOST],

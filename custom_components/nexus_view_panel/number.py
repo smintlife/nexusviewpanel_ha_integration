@@ -1,4 +1,4 @@
-"""Number platform for Nexus View Panel."""
+"""Number platform for NexusViewPanel."""
 from homeassistant.components.number import NumberEntity, NumberMode
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant

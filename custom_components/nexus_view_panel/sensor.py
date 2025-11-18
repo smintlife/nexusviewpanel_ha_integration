@@ -1,4 +1,4 @@
-"""Sensor platform for Nexus View Panel."""
+"""Sensor platform for NexusViewPanel."""
 from homeassistant.components.sensor import (
     SensorDeviceClass,
     SensorEntity,

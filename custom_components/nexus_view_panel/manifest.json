@@ -1,6 +1,6 @@
 {
-  "domain": "nexus_view_panel",
-  "name": "Nexus View Panel",
+  "domain": "nexusviewpanel",
+  "name": "NexusViewPanel",
   "codeowners": ["@smintlife"],
   "config_flow": true,
   "documentation": "https://github.com/smintlife/nexusviewpanel_ha_integration",
@@ -9,5 +9,5 @@
   "requirements": [],
   "version": "1.0.0",
   "dependencies": ["http"],
-  "loggers": ["custom_components.nexus_view_panel"]
+  "loggers": ["custom_components.nexusviewpanel"]
 }
