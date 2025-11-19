@@ -35,7 +35,7 @@ class NexusDisplaySwitch(SwitchEntity):
         self._attr_device_info = {
             "identifiers": {(DOMAIN, entry.entry_id)},
             "name": f"Nexus Panel ({entry.data['host']})",
-            "manufacturer": "smintlife.de",
+            "manufacturer": "smintlife",
         }
         self._attr_unique_id = f"{entry.entry_id}_display_switch"
 

@@ -1,6 +1,5 @@
 """Binary sensor platform for NexusViewPanel."""
 from homeassistant.components.binary_sensor import (
-    BinarySensorDeviceClass,
     BinarySensorEntity,
 )
 from homeassistant.config_entries import ConfigEntry
@@ -17,13 +16,13 @@ CONFIG_SENSORS = [
     ("reloadOnSwipe", "Reload on Swipe", "mdi:reload", None),
     ("reloadOnWakeup", "Reload on Wakeup", "mdi:reload", None),
     ("runOnReboot", "Run on Reboot", "mdi:power", None),
-    ("deviceAdminLock", "Device Admin Lock", "mdi:shield-lock", BinarySensorDeviceClass.LOCK),
+    ("deviceAdminLock", "Device Admin Lock", "mdi:shield-lock", None),
     ("tabsSwipable", "Tabs Swipable", "mdi:arrow-left-right", None),
 ]
 
 NESTED_CONFIG_SENSORS = [
     (("floatingView", "enabled"), "Floating View Enabled", "mdi:picture-in-picture-top-right", None),
-    (("pinProtection", "enabled"), "PIN Protection", "mdi:lock-pattern", BinarySensorDeviceClass.LOCK),
+    (("pinProtection", "enabled"), "PIN Protection", "mdi:lock-pattern", None),
 ]
 
 async def async_setup_entry(
@@ -67,7 +66,7 @@ class NexusConfigBinarySensor(CoordinatorEntity, BinarySensorEntity):
         self._attr_device_info = {
             "identifiers": {(DOMAIN, entry.entry_id)},
             "name": f"Nexus Panel ({entry.data['host']})",
-            "manufacturer": "smintlife.de",
+            "manufacturer": "smintlife",
         }
         self._attr_unique_id = f"{entry.entry_id}_config_{data_key}"
 

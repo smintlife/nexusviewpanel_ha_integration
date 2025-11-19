@@ -37,7 +37,7 @@
     "error": {
       "cannot_connect": "Failed to connect. Please check the host, port, and token. Is the device online?",
       "invalid_auth": "Authentication failed. Please check your API Token.",
-      "invalid_qr": "Invalid string format. It should look like 'http://&lt;device-ip&gt;:&lt;port&gt;/swagger?api_token=&lt;your-token&gt;'",
+      "invalid_qr": "Invalid string format. It should look like 'http://device_ip:port/swagger?api_token=token'",
       "unknown": "An unexpected error occurred."
     },
     "abort": {
