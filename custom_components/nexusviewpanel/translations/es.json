@@ -37,7 +37,7 @@
     "error": {
       "cannot_connect": "No se pudo conectar. Por favor, verifique el host, el puerto y el token. ¿Está el dispositivo en línea?",
       "invalid_auth": "Autenticación fallida. Por favor, verifique su Token API.",
-      "invalid_qr": "Formato de cadena no válido. Debería ser 'http://&lt;device-ip&gt;:&lt;port&gt;/swagger?api_token=&lt;your-token&gt;'",
+      "invalid_qr": "Formato de cadena no válido. Debería ser 'http://device_ip:port/swagger?api_token=token'",
       "unknown": "Ha ocurrido un error inesperado."
     },
     "abort": {

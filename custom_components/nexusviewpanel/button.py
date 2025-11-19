@@ -90,7 +90,7 @@ class NexusBaseButton(ButtonEntity):
         self._attr_device_info = {
             "identifiers": {(DOMAIN, entry.entry_id)},
             "name": f"Nexus Panel ({entry.data['host']})",
-            "manufacturer": "smintlife.de",
+            "manufacturer": "smintlife",
         }
 
 

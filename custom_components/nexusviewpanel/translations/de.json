@@ -37,7 +37,7 @@
     "error": {
       "cannot_connect": "Verbindung fehlgeschlagen. Bitte prüfen Sie Host, Port und Token. Ist das Gerät online?",
       "invalid_auth": "Authentifizierung fehlgeschlagen. Bitte prüfen Sie Ihren API-Token.",
-      "invalid_qr": "Ungültiges String-Format. Es sollte so aussehen: 'http://&lt;device-ip&gt;:&lt;port&gt;/swagger?api_token=&lt;your-token&gt;'",
+      "invalid_qr": "Ungültiges String-Format. Es sollte so aussehen: 'http://device_ip:port/swagger?api_token=token'",
       "unknown": "Ein unerwarteter Fehler ist aufgetreten."
     },
     "abort": {
