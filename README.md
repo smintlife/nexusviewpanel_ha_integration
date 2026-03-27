@@ -1,4 +1,4 @@
-# <img src="custom_components/nexusviewpanel/brand/icon.png" alt="drawing" width="24"/> NexusViewPanel Integration
+# <img src="custom_components/nexusviewpanel/brand/icon.png" alt="drawing" width="26"/> NexusViewPanel Integration
 
 [![hacs_badge](https://img.shields.io/badge/HACS-Custom-orange.svg)](https://github.com/hacs/integration)
 [![GitHub release](https://img.shields.io/github/v/release/smintlife/nexusviewpanel_ha_integration)](https://github.com/smintlife/nexusviewpanel_ha_integration/releases)
