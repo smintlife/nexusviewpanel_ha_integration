@@ -10,7 +10,7 @@ This integration connects your [NexusViewPanel](https://www.smintlife.de/nexus) 
 
 ---
 
-## Entities
+## 📇 Entities
 
 ### Switch
 
@@ -68,7 +68,7 @@ This integration connects your [NexusViewPanel](https://www.smintlife.de/nexus) 
 
 ---
 
-## Services (Actions)
+## ⭐ Services (Actions)
 
 These services can be called from automations and scripts via `nexusviewpanel.<service_name>`.
 
