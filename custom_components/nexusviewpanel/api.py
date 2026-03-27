@@ -100,3 +100,73 @@ class NexusViewPanelApiClient:
     async def async_reload_tab(self, tab_index: int) -> None:
         """Reload a specific tab."""
         await self._request("POST", f"/tabs/{tab_index}/reload")
+
+    async def async_get_tabs(self) -> list[dict[str, Any]]:
+        """Get all configured tabs."""
+        return await self._request("GET", "/tabs")
+
+    async def async_get_tab(self, tab_index: int) -> dict[str, Any]:
+        """Get a single tab by index."""
+        return await self._request("GET", f"/tabs/{tab_index}")
+
+    async def async_get_status(self) -> dict[str, Any]:
+        """Get app status (active tab, floating view state)."""
+        return await self._request("GET", "/status")
+
+    async def async_get_version(self) -> dict[str, Any]:
+        """Get app version info."""
+        return await self._request("GET", "/version")
+
+    async def async_select_tab(self, tab_index: int) -> None:
+        """Select/switch to a tab."""
+        await self._request("POST", f"/tabs/{tab_index}/select")
+
+    async def async_update_webview_tab(
+        self,
+        tab_index: int,
+        title: str | None = None,
+        url: str | None = None,
+        scale: int | None = None,
+        offset_x: int | None = None,
+        offset_y: int | None = None,
+    ) -> None:
+        """Update an existing WebView tab."""
+        body = {}
+        if title is not None:
+            body["title"] = title
+        if url is not None:
+            body["url"] = url
+        if scale is not None:
+            body["scale"] = scale
+        if offset_x is not None:
+            body["offsetX"] = offset_x
+        if offset_y is not None:
+            body["offsetY"] = offset_y
+        await self._request("POST", f"/tabs/{tab_index}/update_webview", json=body)
+
+    async def async_update_rtsp_tab(
+        self,
+        tab_index: int,
+        title: str | None = None,
+        url: str | None = None,
+        rtsp_transport: str | None = None,
+        rtsp_decoder: str | None = None,
+        audio_enabled: bool | None = None,
+    ) -> None:
+        """Update an existing RTSP tab."""
+        body = {}
+        if title is not None:
+            body["title"] = title
+        if url is not None:
+            body["url"] = url
+        if rtsp_transport is not None:
+            body["rtspTransport"] = rtsp_transport
+        if rtsp_decoder is not None:
+            body["rtspDecoder"] = rtsp_decoder
+        if audio_enabled is not None:
+            body["audioEnabled"] = audio_enabled
+        await self._request("POST", f"/tabs/{tab_index}/update_rtsp", json=body)
+
+    async def async_reload_all(self) -> None:
+        """Reload all tabs."""
+        await self._request("POST", "/reload/all")

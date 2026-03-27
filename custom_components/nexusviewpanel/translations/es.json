@@ -43,5 +43,101 @@
     "abort": {
       "already_configured": "Este dispositivo ya está configurado."
     }
+  },
+  "services": {
+    "select_tab": {
+      "name": "Seleccionar pestaña",
+      "description": "Cambia la pestaña activa en el dispositivo NexusViewPanel.",
+      "fields": {
+        "tab_index": {
+          "name": "Índice de pestaña",
+          "description": "El índice basado en cero de la pestaña a seleccionar."
+        }
+      }
+    },
+    "reload_tab": {
+      "name": "Recargar pestaña",
+      "description": "Fuerza una recarga completa de una pestaña específica.",
+      "fields": {
+        "tab_index": {
+          "name": "Índice de pestaña",
+          "description": "El índice basado en cero de la pestaña a recargar."
+        }
+      }
+    },
+    "float_tab": {
+      "name": "Pestaña flotante",
+      "description": "Abre una pestaña específica en la ventana flotante.",
+      "fields": {
+        "tab_index": {
+          "name": "Índice de pestaña",
+          "description": "El índice basado en cero de la pestaña a abrir en la vista flotante."
+        }
+      }
+    },
+    "reload_all_tabs": {
+      "name": "Recargar todas las pestañas",
+      "description": "Fuerza la recarga de todas las pestañas configuradas."
+    },
+    "update_webview_tab": {
+      "name": "Actualizar pestaña WebView",
+      "description": "Actualiza las propiedades de una pestaña WebView existente.",
+      "fields": {
+        "tab_index": {
+          "name": "Índice de pestaña",
+          "description": "El índice basado en cero de la pestaña WebView a actualizar."
+        },
+        "title": {
+          "name": "Título",
+          "description": "Nuevo título para la pestaña."
+        },
+        "url": {
+          "name": "URL",
+          "description": "Nueva URL para que cargue el WebView."
+        },
+        "scale": {
+          "name": "Escala",
+          "description": "El porcentaje de escala de zoom (ej. 100 para 100%)."
+        },
+        "offset_x": {
+          "name": "Desplazamiento X",
+          "description": "Desplazamiento horizontal en píxeles."
+        },
+        "offset_y": {
+          "name": "Desplazamiento Y",
+          "description": "Desplazamiento vertical en píxeles."
+        }
+      }
+    },
+    "update_rtsp_tab": {
+      "name": "Actualizar pestaña RTSP",
+      "description": "Actualiza las propiedades de una pestaña RTSP existente.",
+      "fields": {
+        "tab_index": {
+          "name": "Índice de pestaña",
+          "description": "El índice basado en cero de la pestaña RTSP a actualizar."
+        },
+        "title": {
+          "name": "Título",
+          "description": "Nuevo título para la pestaña."
+        },
+        "url": {
+          "name": "URL",
+          "description": "Nueva URL del stream RTSP."
+        },
+        "rtsp_transport": {
+          "name": "Transporte RTSP",
+          "description": "El protocolo de transporte RTSP a utilizar."
+        },
+        "rtsp_decoder": {
+          "name": "Decodificador RTSP",
+          "description": "El decodificador a utilizar para el stream RTSP."
+        },
+        "audio_enabled": {
+          "name": "Audio habilitado",
+          "description": "Si se debe habilitar el audio para el stream RTSP."
+        }
+      }
+    }
   }
 }

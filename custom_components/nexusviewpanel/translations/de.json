@@ -43,5 +43,101 @@
     "abort": {
       "already_configured": "Dieses Gerät ist bereits konfiguriert."
     }
+  },
+  "services": {
+    "select_tab": {
+      "name": "Tab auswählen",
+      "description": "Wechselt den aktiven Tab auf dem NexusViewPanel-Gerät.",
+      "fields": {
+        "tab_index": {
+          "name": "Tab-Index",
+          "description": "Der nullbasierte Index des auszuwählenden Tabs."
+        }
+      }
+    },
+    "reload_tab": {
+      "name": "Tab neu laden",
+      "description": "Erzwingt ein hartes Neuladen eines bestimmten Tabs.",
+      "fields": {
+        "tab_index": {
+          "name": "Tab-Index",
+          "description": "Der nullbasierte Index des neu zu ladenden Tabs."
+        }
+      }
+    },
+    "float_tab": {
+      "name": "Tab schwebend öffnen",
+      "description": "Öffnet einen bestimmten Tab im schwebenden Fenster.",
+      "fields": {
+        "tab_index": {
+          "name": "Tab-Index",
+          "description": "Der nullbasierte Index des im schwebenden Fenster zu öffnenden Tabs."
+        }
+      }
+    },
+    "reload_all_tabs": {
+      "name": "Alle Tabs neu laden",
+      "description": "Erzwingt ein Neuladen aller konfigurierten Tabs."
+    },
+    "update_webview_tab": {
+      "name": "WebView-Tab aktualisieren",
+      "description": "Aktualisiert die Eigenschaften eines bestehenden WebView-Tabs.",
+      "fields": {
+        "tab_index": {
+          "name": "Tab-Index",
+          "description": "Der nullbasierte Index des zu aktualisierenden WebView-Tabs."
+        },
+        "title": {
+          "name": "Titel",
+          "description": "Neuer Titel für den Tab."
+        },
+        "url": {
+          "name": "URL",
+          "description": "Neue URL für den WebView."
+        },
+        "scale": {
+          "name": "Skalierung",
+          "description": "Die Zoom-Skalierung in Prozent (z.B. 100 für 100%)."
+        },
+        "offset_x": {
+          "name": "Versatz X",
+          "description": "Horizontaler Versatz in Pixel."
+        },
+        "offset_y": {
+          "name": "Versatz Y",
+          "description": "Vertikaler Versatz in Pixel."
+        }
+      }
+    },
+    "update_rtsp_tab": {
+      "name": "RTSP-Tab aktualisieren",
+      "description": "Aktualisiert die Eigenschaften eines bestehenden RTSP-Tabs.",
+      "fields": {
+        "tab_index": {
+          "name": "Tab-Index",
+          "description": "Der nullbasierte Index des zu aktualisierenden RTSP-Tabs."
+        },
+        "title": {
+          "name": "Titel",
+          "description": "Neuer Titel für den Tab."
+        },
+        "url": {
+          "name": "URL",
+          "description": "Neue RTSP-Stream-URL."
+        },
+        "rtsp_transport": {
+          "name": "RTSP-Transport",
+          "description": "Das zu verwendende RTSP-Transportprotokoll."
+        },
+        "rtsp_decoder": {
+          "name": "RTSP-Dekoder",
+          "description": "Der für den RTSP-Stream zu verwendende Dekoder."
+        },
+        "audio_enabled": {
+          "name": "Audio aktiviert",
+          "description": "Ob Audio für den RTSP-Stream aktiviert werden soll."
+        }
+      }
+    }
   }
 }

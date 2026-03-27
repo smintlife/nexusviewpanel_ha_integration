@@ -43,5 +43,101 @@
     "abort": {
       "already_configured": "Cet appareil est déjà configuré."
     }
+  },
+  "services": {
+    "select_tab": {
+      "name": "Sélectionner un onglet",
+      "description": "Change l'onglet actif sur l'appareil NexusViewPanel.",
+      "fields": {
+        "tab_index": {
+          "name": "Index de l'onglet",
+          "description": "L'index base zéro de l'onglet à sélectionner."
+        }
+      }
+    },
+    "reload_tab": {
+      "name": "Recharger l'onglet",
+      "description": "Force un rechargement complet d'un onglet spécifique.",
+      "fields": {
+        "tab_index": {
+          "name": "Index de l'onglet",
+          "description": "L'index base zéro de l'onglet à recharger."
+        }
+      }
+    },
+    "float_tab": {
+      "name": "Onglet flottant",
+      "description": "Ouvre un onglet spécifique dans la fenêtre flottante.",
+      "fields": {
+        "tab_index": {
+          "name": "Index de l'onglet",
+          "description": "L'index base zéro de l'onglet à ouvrir dans la vue flottante."
+        }
+      }
+    },
+    "reload_all_tabs": {
+      "name": "Recharger tous les onglets",
+      "description": "Force le rechargement de tous les onglets configurés."
+    },
+    "update_webview_tab": {
+      "name": "Mettre à jour l'onglet WebView",
+      "description": "Met à jour les propriétés d'un onglet WebView existant.",
+      "fields": {
+        "tab_index": {
+          "name": "Index de l'onglet",
+          "description": "L'index base zéro de l'onglet WebView à mettre à jour."
+        },
+        "title": {
+          "name": "Titre",
+          "description": "Nouveau titre pour l'onglet."
+        },
+        "url": {
+          "name": "URL",
+          "description": "Nouvelle URL pour le WebView à charger."
+        },
+        "scale": {
+          "name": "Échelle",
+          "description": "Le pourcentage de zoom (ex. 100 pour 100%)."
+        },
+        "offset_x": {
+          "name": "Décalage X",
+          "description": "Décalage horizontal en pixels."
+        },
+        "offset_y": {
+          "name": "Décalage Y",
+          "description": "Décalage vertical en pixels."
+        }
+      }
+    },
+    "update_rtsp_tab": {
+      "name": "Mettre à jour l'onglet RTSP",
+      "description": "Met à jour les propriétés d'un onglet RTSP existant.",
+      "fields": {
+        "tab_index": {
+          "name": "Index de l'onglet",
+          "description": "L'index base zéro de l'onglet RTSP à mettre à jour."
+        },
+        "title": {
+          "name": "Titre",
+          "description": "Nouveau titre pour l'onglet."
+        },
+        "url": {
+          "name": "URL",
+          "description": "Nouvelle URL du flux RTSP."
+        },
+        "rtsp_transport": {
+          "name": "Transport RTSP",
+          "description": "Le protocole de transport RTSP à utiliser."
+        },
+        "rtsp_decoder": {
+          "name": "Décodeur RTSP",
+          "description": "Le décodeur à utiliser pour le flux RTSP."
+        },
+        "audio_enabled": {
+          "name": "Audio activé",
+          "description": "Activer ou non l'audio pour le flux RTSP."
+        }
+      }
+    }
   }
 }

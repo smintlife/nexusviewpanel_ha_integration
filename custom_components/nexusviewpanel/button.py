@@ -28,6 +28,7 @@ async def async_setup_entry(
 
     static_buttons = [
         NexusCloseFloatButton(api_client, entry),
+        NexusReloadAllTabsButton(api_client, entry),
         NexusGetDeviceInfoButton(device_coordinator, entry),
         NexusGetConfigButton(config_coordinator, entry),
     ]
@@ -107,6 +108,21 @@ class NexusCloseFloatButton(NexusBaseButton):
     async def async_press(self) -> None:
         """Handle the button press."""
         await self._api_client.async_close_floating()
+
+
+class NexusReloadAllTabsButton(NexusBaseButton):
+    """Button to reload all tabs."""
+    _attr_name = "Reload All Tabs"
+    _attr_icon = "mdi:reload-alert"
+
+    def __init__(self, api_client: NexusViewPanelApiClient, entry: ConfigEntry):
+        super().__init__(entry)
+        self._api_client = api_client
+        self._attr_unique_id = f"{entry.entry_id}_reload_all_tabs"
+
+    async def async_press(self) -> None:
+        """Handle the button press."""
+        await self._api_client.async_reload_all()
 
 
 class NexusReloadTabButton(NexusBaseButton):
