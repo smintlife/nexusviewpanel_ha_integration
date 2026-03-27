@@ -1,5 +1,6 @@
 """Binary sensor platform for NexusViewPanel."""
 from homeassistant.components.binary_sensor import (
+    BinarySensorDeviceClass,
     BinarySensorEntity,
 )
 from homeassistant.config_entries import ConfigEntry
@@ -7,7 +8,7 @@ from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.update_coordinator import CoordinatorEntity
 
-from .const import DOMAIN, COORDINATOR_CONFIG
+from .const import DOMAIN, COORDINATOR_CONFIG, COORDINATOR_DEVICE
 
 CONFIG_SENSORS = [
     ("kioskMode", "Kiosk Mode", "mdi:lock", None),
@@ -33,6 +34,7 @@ async def async_setup_entry(
     """Set up the binary sensor platform."""
     data = hass.data[DOMAIN][entry.entry_id]
     coordinator = data[COORDINATOR_CONFIG]
+    device_coordinator = data[COORDINATOR_DEVICE]
 
     sensors_to_add = []
 
@@ -45,6 +47,10 @@ async def async_setup_entry(
          sensors_to_add.append(
             NexusNestedConfigBinarySensor(coordinator, entry, key1, key2, name, icon, dev_class)
         )
+
+    sensors_to_add.append(
+        NexusChargingBinarySensor(device_coordinator, entry)
+    )
 
     async_add_entities(sensors_to_add)
 
@@ -103,4 +109,30 @@ class NexusNestedConfigBinarySensor(CoordinatorEntity, BinarySensorEntity):
                 return self.coordinator.data[self._key1][self._key2]
             except (KeyError, TypeError):
                 return None
+        return None
+
+
+class NexusChargingBinarySensor(CoordinatorEntity, BinarySensorEntity):
+    """Represents the device charging status."""
+
+    _attr_has_entity_name = True
+    _attr_name = "Charging"
+    _attr_icon = "mdi:battery-charging"
+    _attr_device_class = BinarySensorDeviceClass.BATTERY_CHARGING
+
+    def __init__(self, coordinator, entry: ConfigEntry):
+        """Initialize the binary sensor."""
+        super().__init__(coordinator)
+        self._attr_device_info = {
+            "identifiers": {(DOMAIN, entry.entry_id)},
+            "name": f"Nexus Panel ({entry.data['host']})",
+            "manufacturer": "smintlife",
+        }
+        self._attr_unique_id = f"{entry.entry_id}_charging"
+
+    @property
+    def is_on(self) -> bool | None:
+        """Return the state of the sensor."""
+        if self.coordinator.data:
+            return self.coordinator.data.get("isCharging")
         return None

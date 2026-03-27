@@ -43,5 +43,101 @@
     "abort": {
       "already_configured": "This device is already configured."
     }
+  },
+  "services": {
+    "select_tab": {
+      "name": "Select Tab",
+      "description": "Switch the active tab on the NexusViewPanel device.",
+      "fields": {
+        "tab_index": {
+          "name": "Tab Index",
+          "description": "The zero-based index of the tab to select."
+        }
+      }
+    },
+    "reload_tab": {
+      "name": "Reload Tab",
+      "description": "Force a hard reload of a specific tab.",
+      "fields": {
+        "tab_index": {
+          "name": "Tab Index",
+          "description": "The zero-based index of the tab to reload."
+        }
+      }
+    },
+    "float_tab": {
+      "name": "Float Tab",
+      "description": "Open a specific tab in the floating window.",
+      "fields": {
+        "tab_index": {
+          "name": "Tab Index",
+          "description": "The zero-based index of the tab to open in the floating view."
+        }
+      }
+    },
+    "reload_all_tabs": {
+      "name": "Reload All Tabs",
+      "description": "Force a reload of all configured tabs."
+    },
+    "update_webview_tab": {
+      "name": "Update WebView Tab",
+      "description": "Update the properties of an existing WebView tab.",
+      "fields": {
+        "tab_index": {
+          "name": "Tab Index",
+          "description": "The zero-based index of the WebView tab to update."
+        },
+        "title": {
+          "name": "Title",
+          "description": "New title for the tab."
+        },
+        "url": {
+          "name": "URL",
+          "description": "New URL for the WebView to load."
+        },
+        "scale": {
+          "name": "Scale",
+          "description": "The zoom scale percentage (e.g. 100 for 100%)."
+        },
+        "offset_x": {
+          "name": "Offset X",
+          "description": "Horizontal offset in pixels."
+        },
+        "offset_y": {
+          "name": "Offset Y",
+          "description": "Vertical offset in pixels."
+        }
+      }
+    },
+    "update_rtsp_tab": {
+      "name": "Update RTSP Tab",
+      "description": "Update the properties of an existing RTSP tab.",
+      "fields": {
+        "tab_index": {
+          "name": "Tab Index",
+          "description": "The zero-based index of the RTSP tab to update."
+        },
+        "title": {
+          "name": "Title",
+          "description": "New title for the tab."
+        },
+        "url": {
+          "name": "URL",
+          "description": "New RTSP stream URL."
+        },
+        "rtsp_transport": {
+          "name": "RTSP Transport",
+          "description": "The RTSP transport protocol to use."
+        },
+        "rtsp_decoder": {
+          "name": "RTSP Decoder",
+          "description": "The decoder to use for the RTSP stream."
+        },
+        "audio_enabled": {
+          "name": "Audio Enabled",
+          "description": "Whether to enable audio for the RTSP stream."
+        }
+      }
+    }
   }
 }

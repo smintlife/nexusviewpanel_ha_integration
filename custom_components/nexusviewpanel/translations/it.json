@@ -43,5 +43,101 @@
     "abort": {
       "already_configured": "Questo dispositivo è già configurato."
     }
+  },
+  "services": {
+    "select_tab": {
+      "name": "Seleziona scheda",
+      "description": "Cambia la scheda attiva sul dispositivo NexusViewPanel.",
+      "fields": {
+        "tab_index": {
+          "name": "Indice scheda",
+          "description": "L'indice a base zero della scheda da selezionare."
+        }
+      }
+    },
+    "reload_tab": {
+      "name": "Ricarica scheda",
+      "description": "Forza un ricaricamento completo di una scheda specifica.",
+      "fields": {
+        "tab_index": {
+          "name": "Indice scheda",
+          "description": "L'indice a base zero della scheda da ricaricare."
+        }
+      }
+    },
+    "float_tab": {
+      "name": "Scheda flottante",
+      "description": "Apre una scheda specifica nella finestra flottante.",
+      "fields": {
+        "tab_index": {
+          "name": "Indice scheda",
+          "description": "L'indice a base zero della scheda da aprire nella vista flottante."
+        }
+      }
+    },
+    "reload_all_tabs": {
+      "name": "Ricarica tutte le schede",
+      "description": "Forza il ricaricamento di tutte le schede configurate."
+    },
+    "update_webview_tab": {
+      "name": "Aggiorna scheda WebView",
+      "description": "Aggiorna le proprietà di una scheda WebView esistente.",
+      "fields": {
+        "tab_index": {
+          "name": "Indice scheda",
+          "description": "L'indice a base zero della scheda WebView da aggiornare."
+        },
+        "title": {
+          "name": "Titolo",
+          "description": "Nuovo titolo per la scheda."
+        },
+        "url": {
+          "name": "URL",
+          "description": "Nuovo URL per il WebView da caricare."
+        },
+        "scale": {
+          "name": "Scala",
+          "description": "La percentuale di zoom (es. 100 per 100%)."
+        },
+        "offset_x": {
+          "name": "Offset X",
+          "description": "Offset orizzontale in pixel."
+        },
+        "offset_y": {
+          "name": "Offset Y",
+          "description": "Offset verticale in pixel."
+        }
+      }
+    },
+    "update_rtsp_tab": {
+      "name": "Aggiorna scheda RTSP",
+      "description": "Aggiorna le proprietà di una scheda RTSP esistente.",
+      "fields": {
+        "tab_index": {
+          "name": "Indice scheda",
+          "description": "L'indice a base zero della scheda RTSP da aggiornare."
+        },
+        "title": {
+          "name": "Titolo",
+          "description": "Nuovo titolo per la scheda."
+        },
+        "url": {
+          "name": "URL",
+          "description": "Nuovo URL dello stream RTSP."
+        },
+        "rtsp_transport": {
+          "name": "Trasporto RTSP",
+          "description": "Il protocollo di trasporto RTSP da utilizzare."
+        },
+        "rtsp_decoder": {
+          "name": "Decodificatore RTSP",
+          "description": "Il decodificatore da utilizzare per lo stream RTSP."
+        },
+        "audio_enabled": {
+          "name": "Audio abilitato",
+          "description": "Se abilitare l'audio per lo stream RTSP."
+        }
+      }
+    }
   }
 }

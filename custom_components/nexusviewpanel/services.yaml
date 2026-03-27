@@ -1,0 +1,142 @@
+select_tab:
+  name: Select Tab
+  description: Switch the active tab on the NexusViewPanel device.
+  fields:
+    tab_index:
+      name: Tab Index
+      description: The zero-based index of the tab to select.
+      required: true
+      selector:
+        number:
+          min: 0
+          max: 99
+
+reload_tab:
+  name: Reload Tab
+  description: Force a hard reload of a specific tab on the NexusViewPanel device.
+  fields:
+    tab_index:
+      name: Tab Index
+      description: The zero-based index of the tab to reload.
+      required: true
+      selector:
+        number:
+          min: 0
+          max: 99
+
+float_tab:
+  name: Float Tab
+  description: Open a specific tab in the floating window on the NexusViewPanel device.
+  fields:
+    tab_index:
+      name: Tab Index
+      description: The zero-based index of the tab to open in the floating view.
+      required: true
+      selector:
+        number:
+          min: 0
+          max: 99
+
+reload_all_tabs:
+  name: Reload All Tabs
+  description: Force a reload of all configured tabs on the NexusViewPanel device.
+
+update_webview_tab:
+  name: Update WebView Tab
+  description: Update the properties of an existing WebView tab.
+  fields:
+    tab_index:
+      name: Tab Index
+      description: The zero-based index of the WebView tab to update.
+      required: true
+      selector:
+        number:
+          min: 0
+          max: 99
+    title:
+      name: Title
+      description: New title for the tab.
+      required: false
+      selector:
+        text:
+    url:
+      name: URL
+      description: New URL for the WebView to load.
+      required: false
+      selector:
+        text:
+    scale:
+      name: Scale
+      description: The zoom scale percentage (e.g. 100 for 100%).
+      required: false
+      selector:
+        number:
+          min: 1
+          max: 500
+    offset_x:
+      name: Offset X
+      description: Horizontal offset in pixels.
+      required: false
+      selector:
+        number:
+          min: -1000
+          max: 1000
+    offset_y:
+      name: Offset Y
+      description: Vertical offset in pixels.
+      required: false
+      selector:
+        number:
+          min: -1000
+          max: 1000
+
+update_rtsp_tab:
+  name: Update RTSP Tab
+  description: Update the properties of an existing RTSP tab.
+  fields:
+    tab_index:
+      name: Tab Index
+      description: The zero-based index of the RTSP tab to update.
+      required: true
+      selector:
+        number:
+          min: 0
+          max: 99
+    title:
+      name: Title
+      description: New title for the tab.
+      required: false
+      selector:
+        text:
+    url:
+      name: URL
+      description: New RTSP stream URL.
+      required: false
+      selector:
+        text:
+    rtsp_transport:
+      name: RTSP Transport
+      description: The RTSP transport protocol to use.
+      required: false
+      selector:
+        select:
+          options:
+            - AUTO
+            - UDP
+            - TCP
+    rtsp_decoder:
+      name: RTSP Decoder
+      description: The decoder to use for the RTSP stream.
+      required: false
+      selector:
+        select:
+          options:
+            - AUTO
+            - SOFTWARE
+            - HARDWARE
+    audio_enabled:
+      name: Audio Enabled
+      description: Whether to enable audio for the RTSP stream.
+      required: false
+      selector:
+        boolean:
