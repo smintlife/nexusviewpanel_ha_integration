@@ -9,5 +9,5 @@
   "issue_tracker": "https://github.com/smintlife/nexusviewpanel_ha_integration/issues",
   "loggers": ["custom_components.nexusviewpanel"],
   "requirements": [],
-  "version": "1.0.0"
+  "version": "2.0.1"
 }
