@@ -90,9 +90,29 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         update_interval=timedelta(seconds=status_interval),
     )
     
-    await device_coordinator.async_config_entry_first_refresh()
-    await config_coordinator.async_config_entry_first_refresh()
-    await status_coordinator.async_config_entry_first_refresh()
+    try:
+        await device_coordinator.async_config_entry_first_refresh()
+    except UpdateFailed:
+        LOGGER.warning(
+            "Initial device data fetch failed for %s — entities will be unavailable until device is reachable",
+            entry.data[CONF_HOST],
+        )
+
+    try:
+        await config_coordinator.async_config_entry_first_refresh()
+    except UpdateFailed:
+        LOGGER.warning(
+            "Initial config data fetch failed for %s — entities will be unavailable until device is reachable",
+            entry.data[CONF_HOST],
+        )
+
+    try:
+        await status_coordinator.async_config_entry_first_refresh()
+    except UpdateFailed:
+        LOGGER.warning(
+            "Initial status data fetch failed for %s — entities will be unavailable until device is reachable",
+            entry.data[CONF_HOST],
+        )
 
     hass.data.setdefault(DOMAIN, {})[entry.entry_id] = {
         NEXUS_API_CLIENT: api_client,
